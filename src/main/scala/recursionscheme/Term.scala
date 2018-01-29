@@ -37,6 +37,21 @@ object Term {
     cata(in >>> fn)
   }
 
+
+  def topDown[F[_]](fn: Term[F] => Term[F])(implicit functor: Functor[F]): Term[F] => Term[F] = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    val out: Term[F] => F[Term[F]] = _.out
+    val fmap: F[Term[F]] => F[Term[F]] = {
+      functor.map(_)(bottomUpArrow(fn)(functor))
+    }
+
+    val in: F[Term[F]] => Term[F] = Term(_)
+
+    in <<< fmap <<< out <<< fn
+  }
+
   /*
     def mistery[F[_], A](fn: F[A] => A)(functor: Functor[F]): Term[F] => A = {
       import scalaz.std.function._
