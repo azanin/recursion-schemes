@@ -8,6 +8,8 @@ object Term {
 
   type Algebra[F[_], A] = F[A] => A
 
+  type Coalgebra[A, F[_]] = A => F[A]
+
   def bottomUp[F[_]](fn: Term[F] => Term[F])(implicit functor: Functor[F]): Term[F] => Term[F] = { term =>
     val expr: F[Term[F]] = term.out
     fn(Term(functor.map(expr)(bottomUp(fn)(functor))))
@@ -77,5 +79,19 @@ object Term {
 
     out >>> fmap >>> algebra
   }
+
+
+  def ana[F[_], A](f: Coalgebra[A, F])(implicit functor: Functor[F]): A => Term[F] = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    val in: F[Term[F]] => Term[F] = Term(_)
+    val fmap: F[A] => F[Term[F]] = {
+      functor.map(_)(ana(f)(functor))
+    }
+
+    in <<< fmap <<< f
+  }
+
 }
 
