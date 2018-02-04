@@ -14,6 +14,8 @@ object Term {
 
   type RAlgebra1[F[_], A] = Term[F] => F[A] => A
 
+  type RCoalgebra[F[_], A] = A => F[Either[Term[F], A]]
+
   def bottomUp[F[_]](fn: Term[F] => Term[F])(implicit functor: Functor[F]): Term[F] => Term[F] = { term =>
     val expr: F[Term[F]] = term.out
     fn(Term(functor.map(expr)(bottomUp(fn)(functor))))
@@ -129,6 +131,24 @@ object Term {
   def cataViaPara[F[_], A](algebra: Algebra[F, A])(implicit functor: Functor[F]) = {
     val rAlgebra: Term[F] => F[A] => A = _ => algebra
     para1(rAlgebra)
+  }
+
+  def apo[F[_], A](rCoalgebra: RCoalgebra[F, A])(implicit functor: Functor[F]): A => Term[F] = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    val in: F[Term[F]] => Term[F] = Term(_)
+
+    val fanin: Either[Term[F], A] => Term[F] = {
+      case Left(v) => identity(v)
+      case Right(v) => apo(rCoalgebra)(functor)(v)
+    }
+
+    val fmap: F[Either[Term[F], A]] => F[Term[F]] = {
+      functor.map(_)(fanin)
+    }
+
+    in <<< fmap <<< rCoalgebra
   }
 
 }
