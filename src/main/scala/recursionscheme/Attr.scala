@@ -7,7 +7,7 @@ case class Attr[F[_], A](attribute: A, hole: F[Attr[F, A]])
 object Attr {
 
   type CVAlgebra[F[_], A] = F[Attr[F, A]] => A //course-of-value algebra
-  
+
   def histo[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = {
     import scalaz.std.function._
     import scalaz.syntax.arrow._
@@ -17,12 +17,27 @@ object Attr {
     def fmap(worker: Term[F] => Attr[F, A]): F[Term[F]] => F[Attr[F, A]] =
       f.map(_)(worker)
 
-    val w: Term[F] => Attr[F, A] = { term =>
+    lazy val w: Term[F] => Attr[F, A] = { term =>
       val head: A = histo(cvAlgebra)(f)(term)
-      val hole: F[Attr[F, A]] = f.map(term.out)(w)
+      lazy val hole: F[Attr[F, A]] = f.map(out(term))(w)
       Attr(head, hole)
     }
 
     out >>> fmap(w) >>> cvAlgebra
+  }
+
+  def histoOptimized[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = { term =>
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    val out: Term[F] => F[Term[F]] = _.out
+    val id: F[Attr[F, A]] => F[Attr[F, A]] = attr => identity[F[Attr[F, A]]](attr)
+
+    def fmap(worker: Term[F] => Attr[F, A]): F[Term[F]] => F[Attr[F, A]] = f.map(_)(worker)
+
+    val mkAttr = (t: (A, F[Attr[F, A]])) => Attr(t._1, t._2)
+    lazy val worker: Term[F] => Attr[F, A] = out >>> fmap(worker) >>> (cvAlgebra &&& id) >>> mkAttr
+
+    worker(term).attribute
   }
 }
