@@ -11,7 +11,7 @@ object Main extends App {
   val ten = Term[Expr](Literal(10))
   val five = Term[Expr](Literal(5))
   val add = Term[Expr](Ident("add"))
-  val call = Term[Expr](Call(func = add, Seq(ten, five)))
+  val call: Term[Expr] = Term[Expr](Call(func = add, Seq(ten, five)))
 
   val unary = Term[Expr](Unary("call", call))
 

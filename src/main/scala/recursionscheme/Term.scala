@@ -1,6 +1,6 @@
 package recursionscheme
 
-import scalaz.{Const, Functor, ~>}
+import scalaz.Functor
 
 case class Term[F[_]](out: F[Term[F]])
 
