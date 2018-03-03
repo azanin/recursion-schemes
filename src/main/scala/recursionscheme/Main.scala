@@ -34,6 +34,4 @@ object Main extends App {
   val prettyPrint: Term[Expr] => String = Term.cata(Expr.prettyPrint)
   println(prettyPrint(unary))
 
-
-
 }

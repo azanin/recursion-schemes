@@ -8,7 +8,7 @@ object Attr {
 
   type CVAlgebra[F[_], A] = F[Attr[F, A]] => A //course-of-value algebra
 
-  def histo[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = {
+  def histoUnefficient[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = {
     import scalaz.std.function._
     import scalaz.syntax.arrow._
 
@@ -26,14 +26,17 @@ object Attr {
     out >>> fmap(w) >>> cvAlgebra
   }
 
-  def histoOptimized[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = { term =>
+  def histo[F[_], A](cvAlgebra: CVAlgebra[F, A])(implicit f: Functor[F]): Term[F] => A = { term =>
     import scalaz.std.function._
     import scalaz.syntax.arrow._
 
     val out: Term[F] => F[Term[F]] = _.out
     val id: F[Attr[F, A]] => F[Attr[F, A]] = attr => identity[F[Attr[F, A]]](attr)
 
-    def fmap(worker: Term[F] => Attr[F, A]): F[Term[F]] => F[Attr[F, A]] = f.map(_)(worker)
+    def fmap(w: => Term[F] => Attr[F, A]): F[Term[F]] => F[Attr[F, A]] ={
+      f.map(_)(w)
+    }
+
 
     val mkAttr = (t: (A, F[Attr[F, A]])) => Attr(t._1, t._2)
     lazy val worker: Term[F] => Attr[F, A] = out >>> fmap(worker) >>> (cvAlgebra &&& id) >>> mkAttr
