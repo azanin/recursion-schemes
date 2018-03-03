@@ -1,4 +1,6 @@
-package recursionscheme
+package recursionscheme.examples
+
+import recursionscheme.Term
 
 import scalaz._
 

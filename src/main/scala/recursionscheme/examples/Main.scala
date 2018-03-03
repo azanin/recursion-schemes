@@ -1,7 +1,8 @@
 
-package recursionscheme
+package recursionscheme.examples
 
-import recursionscheme.Expr.{Call, Expr, Ident, Literal, Unary}
+import Expr._
+import recursionscheme.Term
 
 import scalaz.Functor
 

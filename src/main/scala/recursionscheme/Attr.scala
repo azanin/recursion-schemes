@@ -37,7 +37,6 @@ object Attr {
       f.map(_)(w)
     }
 
-
     val mkAttr = (t: (A, F[Attr[F, A]])) => Attr(t._1, t._2)
     lazy val worker: Term[F] => Attr[F, A] = out >>> fmap(worker) >>> (cvAlgebra &&& id) >>> mkAttr
 
