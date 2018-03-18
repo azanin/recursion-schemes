@@ -46,6 +46,46 @@ La dimostrazione di ciò è abbastanza semplice:
 - Ovviamente è anche vero che x((Lx)(Lx)) = (Lx)(Lx) da cui ne consegue che x è innamorato di (Lx)(Lx)
 - Quindi x è normale
 
+## L'uccello saggio
+
+> C'è un uccello speciale nella foresta che, se interrogato con il nome di un uccello x risponda nominando un uccello y del quale x è innamorato?
+
+Questo tipo di uccello viene chiamato "uccello saggio" o "uccello oracolo" ed è denotato dal simbolo &theta;
+
+- Un uccello &theta; gode della proprietà per cui dato un qualsiasi uccello x, esso è innamorato di &theta;x
+- x(&theta;x) = &theta;x
+
+## Come trovare l'uccello saggio
+
+Date le sole condizioni C1 e C2 non è possibile trovare l'uccello saggio.
+
+- Sappiamo che esiste un uccello Mock M e sappiamo pure che dato un uccello x ne esiste uno y che compone con x con M. (Cx = A(Bx))
+- Sappiamo anche che, dunque, x è innamorato di yy. (Yv = X(Mv) => YY = X(MY) => X(YY) = YY)
+
+Ma dato un un uccello x come possiamo trovare un uccello y che compone x ed M?
+
+- In realtà esiste un uccello del genere.
+- Un uccello A che che dato un qualsiasi uccello x risponda nominando un uccello y che componga x ad M.
+- Ax che compone x ad M è equivalente a dire che per ogni uccello x ed y (Ax)y = x(My) (Cx = A(Bx) dove C = Ax; x = y; A = x; B = M)
+- Ma x(My) = x(yy) e quindi (Ax)y = x(yy) per ogni x ed y e quindi A è un'Allodola
+
+Supponiamo dunque che nella foresta sia presente un uccello Mock, un'Allodola e che valga la regola di composizione C2.
+
+- Sappiamo che ogni uccello x è innamorato di (Lx)(Lx) (grazie Allodola!), quindi x è innamorato anche di M(Lx).
+- Dalla condizione di composizione sappiamo che esiste un uccello &theta; che compone M con L. &theta;x = M(Lx)
+- Dato che x è innamorato di M(Lx) e M(Lx) = &theta;x allora x è innamorato di &theta;x 
+
+&theta; è dunque l'uccello saggio, anche detto fixed point combinator.
+
+
+
+
+
+
+
+
+
+
 
 
 
