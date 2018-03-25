@@ -1,99 +1,87 @@
 # The Sage bird
-aka Fix Point Combinator
 
-## La foresta degli uccelli parlanti
+## Talking birds forest
 
-Si supponga una foresta abitata da uccelli parlanti.
+Somewhere there is a magic forest where thousand of talking birds are living.
 
-Le regole base che regolano il canto di questi sono le seguenti:
+Birds follow three talking rules:
 
-* Se si urla B all' uccello A questo risponderà x dove x è un qualsiasi uccello della foresta quindi AB = x
+* If you call out B to A bird, it will answer x where x is another forest's bird, so *AB = x*
 
-* Condizione C1. Nella foresta è presente un uccello Mock per cui Mx = xx. M è chiamato uccello Mock poichè la sua risposta a qualsiasi
-uccello x è la stessa che x avrebbe dato a se stesso.
+* C1 condition. In the forest exist a Mocking bird so that *Mx = xx*.
+M is called Mocking bird because it's answer to any x's bird is the same that x would give to itself.
 
-* Condizione C2. Dati due uccelli qualsiasi A e B, esiste un uccello C tale che Cx = A(Bx).
-In altre parole, per ogni coppia di uccelli A e B ne esiste un terzo C che è la composizione dei due.
+* C2 condition. Given any two birds A and B, C is a bird so that *Cx = A(Bx)*.
+C is the bird that call you back the composition bird of A and B given any x.
 
 
-## Gli uccelli innamorati, felici e normali
+## Fond, normal and happy bird
 
-Nella foresta potrebbe accadere che gridando il nome di un uccello B ad un uccello A quest'ultimo risponda B.
-In questo caso A è innamorato di B e quindi che AB = B.
+### Fond and normal bird
+It could happen that calling out B to A you get back B as answer.
+In this case **A is fond to B** and so *AB = B*.
 
-Si dice che nella foresta, date le condizioni C1 e C2, ogni uccello sia innamorato di almeno un altro uccello...
+Given C1 and C2 conditions, every forest's bird is fond to another one at least...
 
-Ogni uccello innamorato di almeno un altro uccello viene anche detto normale.
+Every fond bird is called normal too.
 
-Un uccello, invece, è felice se dati due uccelli x e y, Ax = y ed Ay = x.
+### Happy birds
+Given two birds x and y, a bird is happy if *Ax = y* and *Ay = x*
 
-In generale ogni uccello che è innamorato (e quindi normale) è anche felice ma il viceversa non è generalmente vero.
-Infatti, solamente se la condizione C1 tiene e vi è un uccello felice nella foresta che allora è presente almeno un uccello normale.
+In general, every fond bird (and normal too) is happy but not every happy bird is fond.
+Infact, only if C2 hold and and an happy bird is in the forest then we can say that an happy bird is normal too.
 
-## Allodola
+## Larks
 
-> "La lòdola perduta nell'aurora si spazia, e di lassù canta alla villa, che un fil di fumo qua e là vapora." Giovanni Pascoli.
+Given two birds x and y, a bird L is a Lark if *(Lx)y = x(yy)*
 
-Un'allodola è un uccello per il quale dati due uccelli x ed y allora (Lx)y = x(yy).
+Lark is a very special bird, because its presence in the forest ensure that all the other birds are fond to at least another one.
+This is a wonderful effect, infact every bird are normal too and happy as well!
 
-Questa specie di uccello ha un'importante proprietà,
-infatti la sua sola presenza nella foresta garantisce che tutti gli uccelli siano innamorati di almeno un altro uccello.
-Questo ha un effetto meraviglioso sulla foresta poichè significa che tutti gli uccelli sono normali e quindi felici!
+To demonstrate this:
+- Suppose there is a lark L and any x,y birds, so *(Lx)y = x(yy)*
+- This is true for *y = Lx* as well, and so *(Lx)(Lx) = x((Lx)(Lx))*
+- We can say then that **x is fond to (Lx)(Lx) and so normal as well**
 
-La dimostrazione di ciò è abbastanza semplice:
-- Si supponga che L sia un'allodola e x ed y due uccelli qualsiasi, ne consegue che (Lx)y = x(yy)
-- Questo è vero anche se y = Lx, che quindi implica che (Lx)(Lx) = x((Lx)(Lx))
-- Ovviamente è anche vero che x((Lx)(Lx)) = (Lx)(Lx) da cui ne consegue che x è innamorato di (Lx)(Lx)
-- Quindi x è normale
+## The sage bird
 
-## L'uccello saggio
+> *"Is there some special bird which, whenever I call out the name of a bird x to it, will respond by naming a bird of which x is fond?*
 
-> C'è un uccello speciale nella foresta che, se interrogato con il nome di un uccello x risponda nominando un uccello y del quale x è innamorato?
+This bird is named "**sage bird**" or "**oracle bird**" and we can refer to it as &theta;
 
-Questo tipo di uccello viene chiamato "uccello saggio" o "uccello oracolo" ed è denotato dal simbolo &theta;
+- Any bird x is fond to &theta; and so *x(&theta;x) = &theta;x*
 
-- Un uccello &theta; gode della proprietà per cui dato un qualsiasi uccello x, esso è innamorato di &theta;x
-- x(&theta;x) = &theta;x
+## Is there a sage bird?
 
-## Esistenza dell'uccello saggio
+It's not possible to be sure about sage bird's existence by C1 and C2 only.
 
-Date le sole condizioni C1 e C2 non è possibile dimostrare l'esistenza dell'uccello saggio nella foresta.
+- Given a M and X bird we know that exist a bird that is the composition of X and M. *Cv = X(Mv)*
+- And so we know that X is fond to yy. *(Yv = X(Mv) => YY = X(MY) => X(YY) = YY)*
 
-- Sappiamo che esiste un uccello Mock M e sappiamo pure che dato un uccello x ne esiste uno y che compone con x con M. (Cx = A(Bx))
-- Sappiamo anche che, dunque, x è innamorato di yy. (Yv = X(Mv) => YY = X(MY) => X(YY) = YY)
+But, **how can we find a y bird that is the composition of x and M?**
 
-Ma dato un un uccello x come possiamo trovare un uccello y che compone x ed M?
+- We already talk about such bird.
+- A bird A that answer back y bird that is the composition of x and M.
+- Ax composing x to M is the same of *(Ax)y = x(My)* for any x,y. *(Cx = A(Bx) where C = Ax; x = y; A = x; B = M)*
+- We know that *x(My) = x(yy)* and so *(Ax)y = x(yy)* => **A is a Lark**.
 
-- In realtà esiste un uccello del genere.
-- Un uccello A che che dato un qualsiasi uccello x risponda nominando un uccello y che componga x ad M.
-- Ax che compone x ad M è equivalente a dire che per ogni uccello x ed y (Ax)y = x(My) (Cx = A(Bx) dove C = Ax; x = y; A = x; B = M)
-- Ma x(My) = x(yy) e quindi (Ax)y = x(yy) per ogni x ed y e quindi A è un'Allodola
+So, given that a M and L are present in the forest and C2 holds then we can say:
 
-Supponiamo dunque che nella foresta sia presente un uccello Mock, un'Allodola e che valga la regola di composizione C2.
+- Every x is fond to *(Lx)(Lx)* (thank you Lark!), and so x is fond to *M(Lx)* as well.
+- From C2 we know that exist a &theta; bird composing M and L. *&theta;x = M(Lx)*
+- Since x is fond to M(Lx) and *M(Lx) = &theta;x* then x is fond to &theta;x
 
-- Sappiamo che ogni uccello x è innamorato di (Lx)(Lx) (grazie Allodola!), quindi x è innamorato anche di M(Lx).
-- Dalla condizione di composizione sappiamo che esiste un uccello &theta; che compone M con L. &theta;x = M(Lx)
-- Dato che x è innamorato di M(Lx) e M(Lx) = &theta;x allora x è innamorato di &theta;x 
-
-&theta; è dunque l'uccello saggio, anche detto fixed point combinator.
-
+**&theta; is the sage bird also knows as fixed point combinator**.
 
 ## Fixed Point
 
-- Un esempio pratico per capire un fixed point è usare una calcolatrice e provare a schiacciare ripetutamente il
-tasto cos partendo dal valore 0.
+A practical example to understand what a function's fix point is, consist in repeatedly hit a calculator's cos key starting from 0.
+- You will notice that the function converge to an x value. *cos(cos(cos(cos(cos(cos(x)))))) = x*
 
-- Si noterà che il valore converge. cos(cos(cos(cos(cos(cos(x)))))) = x
+In general an f's fix point is where *x = f(x)*
+- Notice that x could be a function as well and so *fixpoint-function = f(fixpoint-function)*
 
-- In generale il punto fisso di una funzione è dove y = x = f(x)
-
-- E' importante notare che un punto fisso non per forza deve essere un valore, ma può essere a sua volta una funzione
-
-- fixpoint-function = f(fixpoint-function)
-
-## Funzione Fattoriale
-
-- Implementazione:
+## Factorial function
 
 ```tut:silent
 def factorial(n: Int): Int = n match {
@@ -101,67 +89,65 @@ def factorial(n: Int): Int = n match {
     case x => x * factorial(x - 1)
   }
 ```
-
 ## Puzzle
 
-- Provare a creare una versione di factorial che non è ricorsiva
+*Is it possible to create a non recursive factorial function? (avoid the use of imperative operators)*
 
 ```tut:silent
 def factFLazy(f: => (Int => Int)): Int => Int = { n =>
     if (n == 0) 1
     else n * f(n - 1)
-   }
+ }
 ```
-- Quello che è stato fatto è rinominare la chiamata ricorsiva a factorial in f e passare f come argomento a factFLazy
-- factFLazy è una higher-order function che riceve una funzione f e ritorna un'altra funzione che dovrà essere quella fattoriale.
+- We just renamed recursive call to factorial with f that it's provided as an argument to *factFLazy*.
+- *factFLazy* is an higher-order function, returning another function wich will be the factorial one.
 
-## Factorial tramite factFLazy
+## factorial via factFLazy
 
-- Assumiamo di avere una funzione factA in grado di computare fattoriali
+Given that we have a *factA* function able to compute factorials
+
 ```tut:silent
 def factA(num: Int) : Int = factorial(num)
 ```
-- Si consideri ora la funzione factB
+Let's consider *factB*
+
 ```tut:silent
 val factB: Int => Int = factFLazy(factA)
 ```
 
-- La funzione factB è in grado di computare correttamente i fattoriali poichè dipende da factA
+*factb* computes factorials as well because depend on *factA* and *factFLazy*
 ```tut
 factB(5)
 ```
-
-- E' evidente che data una funzione f in grado di calcolare fattoriali correttamente, la funzione
-factFLazy restituirà un'altra funzione f' che sarà ancora una funzione valida per calcolare fattoriali.
-
-- Ma allora assumendo che f' = f
+Hence, given a factorial f function, factFLazy will return a f' that will compute factorials.
+Assuming *f' = f* then we have:
 
 ```tut
 val fact: Int => Int = factFLazy(fact)
 fact(5)
 ```
-## Fattoriale per induzione
+## factorial via induction
 
-- Definiamo le due seguenti funzioni
+Suppose we have
+
 ```tut:silent
 val identity: Int => Int = { (x: Int) => x }
 val fact0: Int => Int = factFLazy(identity)
 ```
-- Fact0 può computare solamente fact(0).
+*fact0* can compute just the factorial's number of 0
 
 ```tut
 fact0(0)
 fact0(1) // wrong
 ```
 
-- Proviamo a definire ora fact1 in termini di fact0
+We can define *fact1* in terms of *fact0*
 
 ```tut
 val fact1: Int => Int = factFLazy(fact0)
 fact(1)
 ```
-
-- E' evidente che è possibile definire fact n in termini di fact n -1 utilizzando factFLazy.
+Hence, we can define factN in terms of factN-1 exploiting *factFLazy*
 
 ```tut
 val fact2: Int => Int = factFLazy(fact1)
@@ -171,29 +157,23 @@ val fact5: Int => Int = factFLazy(fact4)
 
 fact5(5)
 ```
-
-- Induttivamente dunque abbiamo mostrato che una catena infinita di factFLazy ci darà la funzione fattoriale
-
-- la funzione fact è dunque il punto fisso di factFLazy:
+*fact* function is the **fixed point** of *factFLazy*
 
 ```tut
 val fixFact: Int => Int = factFLazy(fixFact)
 ```
+## The Sage Bird again
 
-## L'uccello saggio, ancora
+Knowing that *factorial* is the *factFLazy*'s fixed point doesn't tell us how to compute it.
+- We'd need a function that receives another function like *factFLazy* as argument and returns the *factFLazy*'s fixed point
 
-- Sapere che fact è il punto fisso di factFLazy non ci dice come computarlo.
+> *Some special bird which, whenever I call out the name of a bird x to it, will respond by naming a bird of which x is fond*.
 
-- Servirebbe una funzione che prendesse in input una funzione come factFLazy e ci restituisse una funzione che è il punto fisso di factFLazy
+## Derivation
 
-> Un uccello speciale che se interrogato con il nome di un uccello x risponde
- nominando un uccello y del quale x è innamorato
-
-## Derivazione
-
- - &theta;f = fix-poinf-f
- - f(fix-point-f) = fix-point-f per definizione di fix point (cos x = x)
- - Per cui &theta;f = f(fix-point-f) e ne consegue che &theta;f = f(&theta;f)
+ - *&theta;f = fix-poinf-f*
+ - *f(fix-point-f) = fix-point-f* by definition of fix point *(cos x = x)*
+ - Hence *&theta;f = f(fix-point-f)* and so *&theta;f = f(&theta;f)*
 
 ## Y-Combinator in Scala
 
@@ -212,19 +192,10 @@ def factorial: Int => Int = Y[Int](factF)
 factorial(5)
 ```
 
-## Note
+## Notes
 
-- Così definito Y non è un combinatore vero e proprio.
+*Y* as we have defined is not a combinator.
+- *Y*'s body contains a free variable: *Y*
 
-- Il corpo della funzione ha infatti una variabile libera che è Y stessa
-
-- In lambda calcolo è definito come: Y = &lambda;f.(&lambda;x.f (x x)) (&lambda;x.f (x x))
-
-- Le due notazioni sono comunque equivalenti ma implementare il combinatore in linguaggi come Haskell o Scala non è possibile senza fare delle forzature sul type system.
-
-
-
-
-
-
-
+In lambda calculus *Y* is defined as: *Y = &lambda;f.(&lambda;x.f (x x)) (&lambda;x.f (x x))*
+- Notations are equivalent but you can't implement the *Y* combinator in the same way of lambda calculus in languages like Haskell or Scala because of the type system.
