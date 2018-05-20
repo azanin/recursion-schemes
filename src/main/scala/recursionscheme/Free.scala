@@ -1,5 +1,6 @@
 package recursionscheme
 
+import recursionscheme.CoFree.CVAlgebra
 import scalaz.Functor
 
 sealed trait Free[F[_], A] //aka Free Monad
@@ -26,5 +27,13 @@ object Free {
     }
 
     in <<< fmap(worker) <<< cVCoalgebra
+  }
+
+  def crono[F, A, B](cVCoalgebra: CVCoalgebra[F, A], cVAlgebra: CVAlgebra[F, B])
+                    (implicit f: Functor[F]): A => B = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    futu(cVCoalgebra) >>> CoFree.histo(cVAlgebra)
   }
 }
