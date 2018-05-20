@@ -151,4 +151,11 @@ object Term {
     in <<< fmap <<< rCoalgebra
   }
 
+  def hylo[F[_], A, B](algebra: Algebra[F, B], coalgebra: Coalgebra[A, F])
+                      (implicit functor: Functor[F]): A => B = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    ana(coalgebra) >>> cata(algebra)
+  }
 }

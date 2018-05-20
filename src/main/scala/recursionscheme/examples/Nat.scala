@@ -1,6 +1,6 @@
 package recursionscheme.examples
 
-import recursionscheme.{Attr, Term}
+import recursionscheme.{CoFree, Term}
 
 import scalaz.Functor
 
@@ -24,15 +24,15 @@ object Nat {
     case n: Int => Term[Nat](Next(fromInt(n-1)))
   }
 
-  def toInt(nat: Nat[Attr[Nat, Int]]): Int = nat match {
+  def toInt(nat: Nat[CoFree[Nat, Int]]): Int = nat match {
     case Zero => 0
-    case Next(Attr(_, x)) => 1 + toInt(x)
+    case Next(CoFree(_, x)) => 1 + toInt(x)
   }
 
-  def lookup[A]: Attr[Nat, A] => Int => A = att => {
+  def lookup[A]: CoFree[Nat, A] => Int => A = att => {
     case 0 => att.attribute
     case n =>
-      val hole: Attr[Nat, A] = att.hole match {
+      val hole: CoFree[Nat, A] = att.hole match {
         case Next(a) => a
         case _ => throw new RuntimeException("Unconceavable")
       }

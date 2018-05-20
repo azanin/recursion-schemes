@@ -1,7 +1,7 @@
 package recursionscheme.examples
 
-import recursionscheme.{Automatic, CoAttr, Manual}
-import recursionscheme.CoAttr.CVCoalgebra
+import recursionscheme.{Continue, Free, Suspend}
+import recursionscheme.Free.CVCoalgebra
 
 import scala.util.Random
 import scalaz.Functor
@@ -37,14 +37,14 @@ object Horticulture extends App {
   val cvCoalgebra: CVCoalgebra[Plant, Seed] = seed => {
     val (action, leftSeed, rightSeed) = seed.grow
     (action, seed.height) match {
-      case (_, 0) => Root(Automatic[Plant, Seed](leftSeed))
+      case (_, 0) => Root(Continue[Plant, Seed](leftSeed))
       case (_, 10) => Bloom
       case (Flower, _) => Bloom
-      case (Upwards, _) => Stalk(Automatic(rightSeed))
+      case (Upwards, _) => Stalk(Continue(rightSeed))
       case (Branch, _) => Fork(
-        Manual[Plant, Seed](Stalk(Automatic[Plant, Seed](leftSeed))),
-        Manual[Plant, Seed](Bloom),
-        Manual[Plant, Seed](Stalk(Automatic[Plant, Seed](rightSeed)))
+        Suspend[Plant, Seed](Stalk(Continue[Plant, Seed](leftSeed))),
+        Suspend[Plant, Seed](Bloom),
+        Suspend[Plant, Seed](Stalk(Continue[Plant, Seed](rightSeed)))
       )
     }
   }
@@ -73,7 +73,7 @@ object Horticulture extends App {
 
   }
 
-  val plant = CoAttr.futu(cvCoalgebra).apply(Seed(0, Random))
+  val plant = Free.futu(cvCoalgebra).apply(Seed(0, Random))
 
   println(plant)
 }

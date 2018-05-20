@@ -1,7 +1,7 @@
 package recursionscheme.examples
 
-import recursionscheme.Attr.CVAlgebra
-import recursionscheme.{Attr, Term}
+import recursionscheme.CoFree.CVAlgebra
+import recursionscheme.{CoFree, Term}
 import recursionscheme.examples.Nat.{Nat, Next, Zero}
 
 import scala.language.postfixOps
@@ -33,7 +33,7 @@ object CCCChanges extends App {
   }
 
   def change(value: Cent): Int = {
-    val function: Term[Nat] => Cent = Attr.histo(cvAlgebra)
+    val function: Term[Nat] => Cent = CoFree.histo(cvAlgebra)
     function(Nat.fromInt(value))
   }
 
