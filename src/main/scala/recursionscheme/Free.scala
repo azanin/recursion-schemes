@@ -29,7 +29,7 @@ object Free {
     in <<< fmap(worker) <<< cVCoalgebra
   }
 
-  def crono[F, A, B](cVCoalgebra: CVCoalgebra[F, A], cVAlgebra: CVAlgebra[F, B])
+  def crono[F[_], A, B](cVCoalgebra: CVCoalgebra[F, A], cVAlgebra: CVAlgebra[F, B])
                     (implicit f: Functor[F]): A => B = {
     import scalaz.std.function._
     import scalaz.syntax.arrow._

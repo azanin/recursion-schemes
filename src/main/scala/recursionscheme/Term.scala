@@ -18,6 +18,8 @@ object Term {
 
   type ElgotCoAlgebra[F[_], A, B] = A => Either[B, F[A]]
 
+  type ElgotAlgebra[F[_], A, B] = (A, F[B]) => B
+
   def bottomUp[F[_]](fn: Term[F] => Term[F])(implicit functor: Functor[F]): Term[F] => Term[F] = { term =>
     val expr: F[Term[F]] = term.out
     fn(Term(functor.map(expr)(bottomUp(fn)(functor))))
@@ -171,5 +173,18 @@ object Term {
     def fmap(f: A => B): F[A] => F[B] = functor.map(_)(f)
 
     elgotCoAlgebra >>> |||(identity, fmap(elgot(algebra, elgotCoAlgebra)) >>> algebra)
+  }
+
+
+  def coElgot[F[_], A, B](elgotAlgebra: ElgotAlgebra[F, A, B], coalgebra: Coalgebra[A, F])
+                         (implicit functor: Functor[F]): A => B = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    def &&&[A, B, C](ab: A => B, ac: A => C): A => (B, C) = a => (ab(a), ac(a))
+
+    def fmap(f: A => B): F[A] => F[B] = functor.map(_)(f)
+
+    elgotAlgebra.tupled <<< &&&(identity, fmap(coElgot(elgotAlgebra, coalgebra)) <<< coalgebra)
   }
 }
