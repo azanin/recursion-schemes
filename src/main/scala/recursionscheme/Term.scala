@@ -16,6 +16,8 @@ object Term {
 
   type RCoalgebra[F[_], A] = A => F[Either[Term[F], A]]
 
+  type ElgotCoAlgebra[F[_], A, B] = A => Either[B, F[A]]
+
   def bottomUp[F[_]](fn: Term[F] => Term[F])(implicit functor: Functor[F]): Term[F] => Term[F] = { term =>
     val expr: F[Term[F]] = term.out
     fn(Term(functor.map(expr)(bottomUp(fn)(functor))))
@@ -157,5 +159,17 @@ object Term {
     import scalaz.syntax.arrow._
 
     ana(coalgebra) >>> cata(algebra)
+  }
+
+  def elgot[F[_], A, B](algebra: Algebra[F, B], elgotCoAlgebra: ElgotCoAlgebra[F, A, B])
+                       (implicit functor: Functor[F]): A => B = {
+    import scalaz.std.function._
+    import scalaz.syntax.arrow._
+
+    def |||[A, B, C](ba: B => A, ca: C => A): Either[B, C] => A = _.fold[A](ba, ca)
+
+    def fmap(f: A => B): F[A] => F[B] = functor.map(_)(f)
+
+    elgotCoAlgebra >>> |||(identity, fmap(elgot(algebra, elgotCoAlgebra)) >>> algebra)
   }
 }
